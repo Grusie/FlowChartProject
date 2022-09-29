@@ -1,0 +1,12 @@
+input
+multiplication
+addition
+subtraction
+division
+variable
+for
+if
+end
+right
+left
+equal
