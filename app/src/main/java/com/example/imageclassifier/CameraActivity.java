@@ -22,9 +22,11 @@ public class CameraActivity extends Activity {
     public static final String TAG = "[IC]CameraActivity";
     public static final int CAMERA_IMAGE_REQUEST_CODE = 1;
     private static final String KEY_SELECTED_URI = "KEY_SELECTED_URI";
+
     private ClassifierWithModel cls;
     private ImageView imageView;
     private TextView textView;
+
     Uri selectedImageUri;
 
     private void getImageFromCamera(){
@@ -43,13 +45,13 @@ public class CameraActivity extends Activity {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
                     bitmap = MediaStore.Images.Media.getBitmap(
-                            getContentResolver(), selectedImageUri);
+                             getContentResolver(), selectedImageUri);
                 }
             } catch (IOException ioe) {
                 Log.e(TAG, "Failed to read Image", ioe);
             }
             if(bitmap != null) {
-                Pair<String, Float> output = cls.classify(bitmap, 90);
+                Pair<String, Float> output = cls.classify(bitmap);
                 String resultStr = String.format(Locale.ENGLISH,
                         "class : %s, prob : %.2f%%",
                         output.first, output.second * 100);
@@ -59,6 +61,7 @@ public class CameraActivity extends Activity {
         }
     }
 
+    //Activity 의 데이터를 유지하기 위한 메소드
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
